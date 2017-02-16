@@ -62,7 +62,7 @@ class Interval
 		void insert(int, int);
 
 		// Function called by insert() to recursively traverse and insert a range
-		void insert_helper(node *, int, int);
+		node * insert_helper(node *, int, int);
 
 		// Search for a range
 		range search(int, int);
@@ -74,8 +74,10 @@ class Interval
 		void remove(int, int);
 
 		// Helper function to remove a range
-		void remove_helper(node *, int, int);
+		node * remove_helper(node *, int, int);
 
+		// Helper function to update max_right in a subtree
+		node * update_max(node *);
 };
 
 #endif
