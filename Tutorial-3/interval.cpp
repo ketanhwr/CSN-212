@@ -15,17 +15,20 @@ using namespace std;
 
 // Definition of the functions of Interval Class
 
+// Constructor
 Interval::Interval()
 {
 	root = NULL;
 }
 
+// Insert an interval
 void Interval::insert(int l, int r)
 {
 	node *temp = this->insert_helper(root, l, r);
 	return;
 }
 
+// Recursively traverse and insert an interval
 node * Interval::insert_helper(node *current, int l, int r)
 {
 	if (current == NULL)
@@ -43,11 +46,13 @@ node * Interval::insert_helper(node *current, int l, int r)
     return current;
 }
 
+// Search for an interval
 range Interval::search(int l, int r)
 {
 	return this->search_helper(root, l, r);
 }
 
+// Recursively traverse and search for an interval
 range Interval::search_helper(node *current, int l, int r)
 {
 	if(current == NULL)
@@ -66,11 +71,13 @@ range Interval::search_helper(node *current, int l, int r)
 	return this->search_helper(current->right, l, r);
 }
 
+// Remove an interval
 void Interval::remove(int l, int r)
 {
 	node *temp = this->remove_helper(root, l, r);
 }
 
+// Recursively search and remove that interval
 node * Interval::remove_helper(node *current, int l, int r)
 {
 	if(current == NULL) return NULL;
@@ -87,6 +94,7 @@ node * Interval::remove_helper(node *current, int l, int r)
 
 	else
 	{
+		// If only 1 or 0 child
 		if(current->left == NULL)
 		{
 			node * temp = current->right;
@@ -101,20 +109,25 @@ node * Interval::remove_helper(node *current, int l, int r)
 			return temp;
 		}
 
+		// Left most node in the right subtree should replace this node
 		node * temp = current->right;
 		while(temp->left != NULL)
 		{
 			temp = temp->left;
 		}
 
+		// Remove the replaced node
 		current->r = temp->r;
 		current->right = this->remove_helper(current->right, l, r);
 	}
 
+	// Update max_right in this subtree
 	current = update_max(current);
 	return current;
 }
 
+
+// Helper Function
 node * Interval::update_max(node *current)
 {
 	if(current == NULL) return NULL;
@@ -153,17 +166,21 @@ int main()
 	//Code
 	Interval tree;
 
+	// Insert some dummy intervals
 	tree.insert(5, 6);
 	tree.insert(5, 10);
 	tree.insert(1, 6);
 	tree.insert(15, 20);
 	tree.insert(0, 2);
 
+	// Search for an interval
 	range r = tree.search(1,10);
 	cout << r.first << " " << r.second << endl;
 
+	// Remove an interval 
 	tree.remove(1,10);
 
+	// Search for the removed interval
 	r = tree.search(1,10);
 	cout << r.first << " " << r.second << endl;
 
