@@ -28,6 +28,19 @@ struct node {
 
 		left = right = NULL;
 	}
+
+	// Check if two intervals overlap
+	bool overlap(int l, int r)
+	{
+		if(this->r.first <= r && this->r.second >= l)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 };
 
 // If class Interval is not defined then define its prototype
