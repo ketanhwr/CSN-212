@@ -4,6 +4,7 @@
  */
 
 #include <iostream>
+#include <utility>
 
 // Include the prototype of the Interval Tree class
 #include "interval.h"
@@ -31,10 +32,10 @@ node * Interval::insert_helper(node *current, int l, int r)
         return new node(l, r);
  
     if (l < current->r.first)
-        current->left = insert(current->left, l, r);
+        current->left = insert_helper(current->left, l, r);
  
     else
-        current->right = insert(current->right, l, r);
+        current->right = insert_helper(current->right, l, r);
  
     if (current->max_right < r)
         current->max_right = r;

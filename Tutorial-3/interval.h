@@ -6,7 +6,7 @@
 #include <utility>	// To use pair<int,int>
 
 // STL Template to hold a pair of integers
-typedef pair<int,int> range;
+typedef std::pair<int,int> range;
 
 // Structure of the node of an Interval Tree
 struct node {
@@ -23,10 +23,10 @@ struct node {
 	// Constructor of the node structure
 	node(int l, int r)
 	{
-		r = range(l, r);
-		max_right = r;
+		this->r = std::make_pair(l,r);
+		this->max_right = r;
 
-		left = right = NULL;
+		this->left = this->right = NULL;
 	}
 
 	// Check if two intervals overlap
