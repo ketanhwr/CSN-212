@@ -26,6 +26,7 @@
 #include <utility>
 #include <algorithm>
 #include <assert.h>
+#include <ctime>
  
 using namespace std;
  
@@ -55,7 +56,7 @@ typedef vector<ll> vll;
 
 int N, M;   // Number of vertices and edges
 vector<pair<pii,int> > al;  // List of all the edges
-int dst[100005];    // Storing minimum distance to all vertices
+int dst[1000005];    // Storing minimum distance to all vertices
 
 void shortestPath(int source)
 {
@@ -72,35 +73,25 @@ void shortestPath(int source)
                 dst[v] = dst[u] + cost;
         }
     }
-
-    for (int i = 0; i < M; i++) {
-        int u = al[i].F.F;
-        int v = al[i].F.S;
-        int cost = al[i].S;
-        if (dst[u] != INF && dst[u] + cost < dst[v])
-            cout << "Graph contains negative cycle" << endl;
-    }
- 
-    cout << "Minimum distances:" << endl;
-    for (int i = 0; i < N; ++i)
-        cout << i << ": " << dst[i] << endl;
 }
 
 int main()
 {
-    N = 5;
-    M = 8;
- 
-    al.pb(mp(mp(0,1),-1));
-    al.pb(mp(mp(0,2),4));
-    al.pb(mp(mp(1,2),3));
-    al.pb(mp(mp(1,3),2));
-    al.pb(mp(mp(1,4),2));
-    al.pb(mp(mp(3,2),5));
-    al.pb(mp(mp(3,1),1));
-    al.pb(mp(mp(4,3),-3));
- 
-    shortestPath(0);
+    srand(time(NULL));
+    for(int i = 1;i <= 500000;i*=5) {
+        for(int j = 1;j <= 500000;j*=5) {
+            al.clear();
+            N = i;
+            M = j;
+            for(int k =0;k<j;k++) {
+                al.pb(mp(mp(rand()%i,rand()%i),rand()%10000 - 5000));
+            }
+            clock_t begin = clock();
+            shortestPath(rand()%i);
+            clock_t end = clock();
+            cout << "Time Taken: (" << i*j << "): " << ((double)((double)(end-begin))/CLOCKS_PER_SEC) << " sec" << endl;
+        }
+    }
  
     return 0;
 }
